@@ -15,6 +15,10 @@ function fn_search(){
 	document.listForm.action = '/testdb';
 	document.listForm.submit();
 }
+function fn_boardDetail(id){
+	document.listForm.action = '/boardDetail.do?no='+id;
+	document.listForm.submit();
+}
 </script>
 </head>
 
@@ -41,7 +45,7 @@ function fn_search(){
 					<li><label for="searchKeyword"
 						style="visibility: hidden; display: none;">검색어 입력</label> <input
 						id="searchKeyword" name="searchKeyword" class="txt" type="text"
-						value="${id}" /></li>
+						value="" /></li>
 					<li><span class="btn_blue_l"> <a href="javascript:fn_search()">검색</a> <img
 							src="/resource/res/img/btn_bg_r.gif" style="margin-left: 6px;"
 							alt="" />
@@ -72,7 +76,7 @@ function fn_search(){
 					<c:forEach var="result" items="${selectSubjectList}" varStatus="status">
 					<tr>
 						<td align="center" class="listtd"><c:out value="${result.ID}"/></td>
-						<td align="center" class="listtd"><a href=""><c:out value="${result.SUBJECT}"/></a></td>
+						<td align="center" class="listtd"><a href="javascript:fn_boardDetail('${result.ID}')"><c:out value="${result.SUBJECT}"/></a></td>
 						<td align="left" class="listtd"><c:out value="${result.GRADE}"/>&nbsp;</td>
 						<td align="center" class="listtd"><c:out value="${result.USE_YN}"/>&nbsp;</td>
 						<td align="center" class="listtd"><c:out value="${result.DESCRIPTION}"/>&nbsp;</td>

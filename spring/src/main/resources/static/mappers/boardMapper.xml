@@ -39,7 +39,7 @@
 		<if test="value != null and value != ''"> AND subject LIKE CONCAT('%',#{value} ,'%') </if>
 
 	</select>
-	<select resultType="hashmap" id="selectSubjectOne"
+	<select resultType="hashmap" id="boardDetail"
 		parameterType="String">
 		SELECT
 		ID, SUBJECT, GRADE, DESCRIPTION, USE_YN,
@@ -50,7 +50,19 @@
 		INSERT INTO SAMPLE
 		(SUBJECT, GRADE, USE_YN, DESCRIPTION, REG_USER)
 		VALUES
-		(#{subject}, #{grade}, #{useYn}, #{description}, #{reg_user})
+		(#{subject}, #{grade}, #{useYn}, #{description}, #{regUser})
 	</insert>
+	<update id="modifySubject" parameterType="Map">
+		Update SAMPLE
+		SET
+			SUBJECT = #{subject},
+			GRADE = #{grade},
+			USE_YN = #{useYn},
+			DESCRIPTION = #{description},
+			REG_USER = #{regUser}
+		WHERE
+			ID = #{id}
+			
+	</update>
 
 </mapper>

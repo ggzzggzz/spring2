@@ -26,4 +26,10 @@ public class BoardService {
 	public int insertSubject(HashMap<String, String> map)throws Exception{
 		return boardMapper.insertSubject(map);
 	}
+	public HashMap<String, String> boardDetail(String no)throws Exception{
+		return boardMapper.boardDetail(no);
+	}
+	public int modifySubject(HashMap<String, String> map)throws Exception{
+		return boardMapper.modifySubject(map);
+	}
 }

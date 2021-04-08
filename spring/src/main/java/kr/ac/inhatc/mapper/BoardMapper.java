@@ -10,4 +10,6 @@ public interface BoardMapper {
 	List<BoardDto> selectSubjectList2(String name) throws Exception;
 	int selectSubjectListCount(String name) throws Exception;
 	public int insertSubject(HashMap<String, String> map)throws Exception;
+	public HashMap<String, String> boardDetail(String no)throws Exception;
+	public int modifySubject(HashMap<String, String> map)throws Exception;
 }

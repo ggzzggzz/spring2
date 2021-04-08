@@ -29,7 +29,12 @@
     } 
     
     function fn_insertSubject(){
-    	document.detailForm.action = "insertSubject";
+    	document.detailForm.action = "insertSubject.do";
+    	document.detailForm.submit();
+    }
+    
+    function fn_modifySubject(){
+    	document.detailForm.action = "modifySubject.do";
     	document.detailForm.submit();
     }
 
@@ -65,21 +70,21 @@
         		<tr>
         			<td class="tbtd_caption"><label for="id">No</label></td>
         			<td class="tbtd_content">
-        				<input id="id" name="id" class="essentiality" readonly="readonly" type="text" value="" maxlength="10"/>
+        				<input id="id" name="id" class="essentiality" readonly="readonly" type="text" value="${detail.ID}" maxlength="10"/>
         			</td>
         		</tr>
     		
     		<tr>
     			<td class="tbtd_caption"><label for="name">과목명</label></td>
     			<td class="tbtd_content">
-    				<input id="subject" name="subject" class="txt" type="text" value="" maxlength="30"/>
+    				<input id="subject" name="subject" class="txt" type="text" value="${detail.SUBJECT}" maxlength="30"/>
     				&nbsp;
     			</td>
     		</tr>
     		<tr>
     			<td class="tbtd_caption"><label for="name">학년</label></td>
     			<td class="tbtd_content">
-    				<input id="grade" name="grade" class="txt" type="text" value="" maxlength="30"/>
+    				<input id="grade" name="grade" class="txt" type="text" value="${detail.GRADE}" maxlength="30"/>
     				&nbsp;
     			</td>
     		</tr>
@@ -95,7 +100,7 @@
     		<tr>
     			<td class="tbtd_caption"><label for="description">설명</label></td>
     			<td class="tbtd_content">
-    				<textarea id="description" name="description" rows="5" cols="58"></textarea>&nbsp;
+    				<textarea id="description" name="description" rows="5" cols="58">${detail.DESCRIPTION}</textarea>&nbsp;
                 </td>
     		</tr>
     		<tr>
@@ -116,7 +121,7 @@
                 </li>
     			<li>
                     <span class="btn_blue_l">
-                        <a href="">
+                        <a href="javascript:fn_modifySubject()">
                             
                             수정
                         </a>

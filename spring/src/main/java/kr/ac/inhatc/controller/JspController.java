@@ -59,7 +59,7 @@ public class JspController {
 	}
 	@RequestMapping("testdb")
 	public String board1(Model model, 
-			@RequestParam(name = "searchKeyword",required = false,defaultValue = "프로그")String id) {
+			@RequestParam(name = "searchKeyword",required = false,defaultValue = "")String id) {
 		model.addAttribute("id",id);
 		try {
 			List<?> l = boardService.selectSubjectList(id);
@@ -74,10 +74,11 @@ public class JspController {
 		return "board4";
 	}
 	@RequestMapping("/boardDetail.do")
-	public ModelAndView boardDetail()throws Exception{
+	public ModelAndView boardDetail(String no)throws Exception{
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("title", "상세");
 		mv.setViewName("boardDetail");
+		mv.addObject("detail",boardService.boardDetail(no));
 		return mv;
 	}
 	@RequestMapping("/regSubject.do")
@@ -97,6 +98,20 @@ public class JspController {
 		hashMap.put("description",description);
 		hashMap.put("regUser",regUser);
 		boardService.insertSubject(hashMap);
-		return boardDetail();
+		return boardDetail("");
+	}
+	
+	@RequestMapping("/modifySubject.do")
+	public ModelAndView modifySubject(String id,String subject, String grade, 
+			String useYn, String description, String regUser)throws Exception{
+		HashMap<String, String> hashMap = new HashMap<String, String>();
+		hashMap.put("subject",subject);
+		hashMap.put("grade",grade);
+		hashMap.put("useYn",useYn);
+		hashMap.put("description",description);
+		hashMap.put("regUser",regUser);
+		hashMap.put("id", id);
+		boardService.modifySubject(hashMap);
+		return boardDetail("id");
 	}
 }
