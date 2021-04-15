@@ -32,7 +32,7 @@ public class JspController {
 			@RequestParam(name = "searchKeyword",required = false,defaultValue = "연습페이지")String id) {
 		model.addAttribute("id",id);
 		try {
-			List<?> l = boardService.selectSubjectList(id);
+			List<?> l = boardService.selectSubjectList(id,1);
 			//int count = boardService.selectSubjectListCount(id);
 			model.addAttribute("subjectList",l);
 			//model.addAttribute("count",count);
@@ -58,20 +58,23 @@ public class JspController {
 		return "board3";
 	}
 	@RequestMapping("testdb")
-	public String board1(Model model, 
-			@RequestParam(name = "searchKeyword",required = false,defaultValue = "")String id) {
-		model.addAttribute("id",id);
+	public ModelAndView board1( 
+			@RequestParam(name = "searchKeyword",required = false,defaultValue = "")String id,
+			@RequestParam(name = "page",required = false,defaultValue = "1")Integer page) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("id", id);
+		mv.setViewName("board4");
 		try {
-			List<?> l = boardService.selectSubjectList(id);
+			List<?> l = boardService.selectSubjectList(id, page);
 			int count = boardService.selectSubjectListCount(id);
-			model.addAttribute("cnt",count);
-			model.addAttribute("selectSubjectList",l);
+			mv.addObject("cnt",count);
+			mv.addObject("selectSubjectList",l);
 			System.out.println(l.toString());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "board4";
+		return mv;
 	}
 	@RequestMapping("/boardDetail.do")
 	public ModelAndView boardDetail(String no)throws Exception{
@@ -113,5 +116,10 @@ public class JspController {
 		hashMap.put("id", id);
 		boardService.modifySubject(hashMap);
 		return boardDetail("id");
+	}
+	@RequestMapping("/deleteSubject.do")
+	public ModelAndView deleteSubject(String id) throws Exception {
+		boardService.deleteSubject(id);
+		return board1("",1);
 	}
 }

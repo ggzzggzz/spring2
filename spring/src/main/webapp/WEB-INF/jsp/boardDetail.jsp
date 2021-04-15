@@ -37,6 +37,11 @@
     	document.detailForm.action = "modifySubject.do";
     	document.detailForm.submit();
     }
+    
+    function fn_delete() {
+    	document.detailForm.action = "/deleteSubject.do";
+    	document.detailForm.submit();
+    }
 
 </script>
 
@@ -131,7 +136,7 @@
     			
                     <li>
                         <span class="btn_blue_l">
-                            <a href="">삭제</a>
+                            <a href="javascript:fn_delete()">삭제</a>
                             <img src="/resource/res/img/btn_bg_r.gif" style="margin-left:6px;" alt=""/>
                         </span>
                     </li>

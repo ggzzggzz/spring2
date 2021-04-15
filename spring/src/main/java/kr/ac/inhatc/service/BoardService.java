@@ -14,8 +14,12 @@ public class BoardService {
 	@Autowired
 	BoardMapper boardMapper;
 	
-	public List<?> selectSubjectList(String name) throws Exception{
-		return boardMapper.selectSubjectList(name);
+	public List<?> selectSubjectList(String name, Integer page) throws Exception{
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("keyword", name);
+		page = (page-1)*10;
+		map.put("page", page);
+		return boardMapper.selectSubjectList(map);
 	}
 	public List<BoardDto> selectSubjectList2(String name) throws Exception{
 		return boardMapper.selectSubjectList2(name);
@@ -31,5 +35,8 @@ public class BoardService {
 	}
 	public int modifySubject(HashMap<String, String> map)throws Exception{
 		return boardMapper.modifySubject(map);
+	}
+	public int deleteSubject(String id) throws Exception{
+		return boardMapper.deleteSubject(id);
 	}
 }

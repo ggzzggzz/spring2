@@ -19,6 +19,10 @@ function fn_boardDetail(id){
 	document.listForm.action = '/boardDetail.do?no='+id;
 	document.listForm.submit();
 }
+function fn_page_search(page){
+	document.listForm.action = '/testdb?page='+page;
+	document.listForm.submit();
+}
 </script>
 </head>
 
@@ -92,8 +96,8 @@ function fn_boardDetail(id){
 						src=/resource/res/img/btn_page_pre10.gif border=0 /></a>&#160;<a
 					href="#" onclick=""><image
 						src=/resource/res/img/btn_page_pre1.gif border=0 /></a>&#160;<strong>1</strong>&#160;<a
-					href="#" onclick="">2</a>&#160;<a href="#" onclick="">3</a>&#160;<a
-					href="#" onclick="">4</a>&#160;<a href="#" onclick="">5</a>&#160;<a
+					href="javascript:fn_page_search(2)" onclick="">2</a>&#160;<a href="javascript:fn_page_search(3)" onclick="">3</a>&#160;<a
+					href="javascript:fn_page_search(4)" onclick="">4</a>&#160;<a href="#" onclick="">5</a>&#160;<a
 					href="#" onclick="">6</a>&#160;<a href="#" onclick="">7</a>&#160;<a
 					href="#" onclick="">8</a>&#160;<a href="#" onclick="">9</a>&#160;<a
 					href="#" onclick="">10</a>&#160;<a href="#" onclick=""><image

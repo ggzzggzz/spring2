@@ -8,14 +8,14 @@
 	<select resultType="String" id="getName">select member from test </select>
 	
 	<select resultType="hashmap" id="selectSubjectList"
-		parameterType="String">
+		parameterType="hashmap">
 		SELECT
 		ID, SUBJECT, GRADE, DESCRIPTION, USE_YN, REG_USER
 		FROM
 		SAMPLE
 		WHERE 1=1
-		<if test="value != null and value != ''"> AND subject LIKE CONCAT('%',#{value} ,'%') </if>
-
+		<if test="value != null and value != ''"> AND subject LIKE CONCAT('%',#{keyword} ,'%') </if>
+		LIMIT #{page},10
 	</select>
 	
 	<select resultType="int" id="selectSubjectListCount"
@@ -64,5 +64,9 @@
 			ID = #{id}
 			
 	</update>
+	<delete id="deleteSubject" parameterType="String">
+		DELETE FROM SAMPLE
+		 WHERE ID = #{value}
+	</delete>
 
 </mapper>
