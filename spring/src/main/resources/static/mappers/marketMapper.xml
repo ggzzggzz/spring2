@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.ac.inhatc.mapper.MarketMapper">
+	<select id="processLoginMember" parameterType="kr.ac.inhatc.dto.MemberDto" resultType="kr.ac.inhatc.dto.MemberDto">
+        SELECT * FROM SHOP_MEMBER WHERE id = #{id} and password = #{password}
+    </select>
+    <insert id="processAddMember" parameterType="kr.ac.inhatc.dto.MemberDto">
+    	INSERT INTO SHOP_MEMBER
+    	VALUES
+    	(#{id}, #{password}, #{name}, #{gender}, #{birth},
+    	#{mail}, #{phone}, #{address}, now())
+    </insert>
+</mapper>
