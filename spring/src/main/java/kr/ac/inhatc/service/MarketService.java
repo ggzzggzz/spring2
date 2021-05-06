@@ -16,4 +16,13 @@ public class MarketService {
 	public int processAddMember(MemberDto dto) throws Exception{
 		return mapper.processAddMember(dto);
 	}
+	public MemberDto processInfoMember(MemberDto dto) throws Exception{
+		return mapper.processInfoMember(dto);
+	}
+	public int processUpdateMember(MemberDto dto) throws Exception{
+		return mapper.processUpdateMember(dto);
+	}
+	public int deleteMember(MemberDto dto) throws Exception{
+		return mapper.deleteMember(dto);
+	}
 }

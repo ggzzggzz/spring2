@@ -13,4 +13,24 @@
     	(#{id}, #{password}, #{name}, #{gender}, #{birth},
     	#{mail}, #{phone}, #{address}, now())
     </insert>
+    <select id="processInfoMember" parameterType="kr.ac.inhatc.dto.MemberDto" resultType="kr.ac.inhatc.dto.MemberDto">
+        SELECT * FROM SHOP_MEMBER WHERE id = #{id}
+    </select>
+    <update id="processUpdateMember" parameterType="kr.ac.inhatc.dto.MemberDto">
+    	UPDATE SHOP_MEMBER
+    		SET
+    		password = #{password},
+    		name =  #{name},
+    		gender = #{gender},
+    		birth = #{birth},
+    		mail = #{mail},
+    		phone = #{phone},
+    		address = #{address}
+    	WHERE
+    		id = #{id}
+    </update>
+    <delete id="deleteMember" parameterType="kr.ac.inhatc.dto.MemberDto">
+    	DELETE FROM SHOP_MEMBER
+    	WHERE id = #{id}
+    </delete>
 </mapper>

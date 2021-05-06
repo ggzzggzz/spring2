@@ -3,51 +3,36 @@
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <html>
 <head>
-<link rel="stylesheet" href="../resources/css/bootstrap.min.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <%
 	String sessionId = (String) session.getAttribute("sessionId");
 %>
-<sql:setDataSource var="dataSource"
-	url="jdbc:mysql://localhost:3306/WebMarketDB"
-	driver="com.mysql.jdbc.Driver" user="root" password="1234" />
-
-<sql:query dataSource="${dataSource}" var="resultSet">
-   SELECT * FROM MEMBER WHERE ID=?
-   <sql:param value="<%=sessionId%>" />
-</sql:query>	
+	
 <title>회원 수정</title>
 </head>
 <body onload="init()">
-	<jsp:include page="/menu.jsp" />
+	<jsp:include page="../menu.jsp" />
 	<div class="jumbotron">
 		<div class="container">
 			<h1 class="display-3">회원 수정</h1>
 		</div>
 	</div>
-	<c:forEach var="row" items="${resultSet.rows}">
-	<c:set var="mail" value="${row.mail}" />
-	<c:set var="mail1" value="${mail.split('@')[0]}" />
-	<c:set var="mail2" value="${mail.split('@')[1]}" />
-
-	<c:set var="birth" value="${row.birth }" />
-	<c:set var="year" value="${birth.split('/')[0]}" />
-	<c:set var="month" value="${birth.split('/')[1]}" />
-	<c:set var="day" value="${birth.split('/')[2]}" />
 	
 	<div class="container">
 		<form name="newMember" class="form-horizontal"
-			action="processUpdateMember.jsp" method="post"
+			action="/member/processUpdateMember.do" method="post"
 			onsubmit="return checkForm()">
 			<div class="form-group  row">
 				<label class="col-sm-2 ">아이디</label>
 				<div class="col-sm-3">
-					<input name="id" type="text" class="form-control" placeholder="id" value="<c:out value='${row.id }'/>" >
+					<input name="id" type="text" class="form-control" placeholder="id" value="<c:out value='${member.id }'/>" >
 				</div>
 			</div>
 			<div class="form-group  row">
 				<label class="col-sm-2">비밀번호</label>
 				<div class="col-sm-3">
-					<input name="password" type="text" class="form-control" placeholder="password" value="<c:out value='${row.password }'/>" >
+					<input name="password" type="text" class="form-control" placeholder="password" value="<c:out value='${member.password }'/>" >
 				</div>
 			</div>
 			<div class="form-group  row">
@@ -59,13 +44,13 @@
 			<div class="form-group  row">
 				<label class="col-sm-2">성명</label>
 				<div class="col-sm-3">
-					<input name="name" type="text" class="form-control" placeholder="name" value="<c:out value='${row.name }'/>" >
+					<input name="name" type="text" class="form-control" placeholder="name" value="<c:out value='${member.name }'/>" >
 				</div>
 			</div>
 			<div class="form-group  row">
 				<label class="col-sm-2">성별</label>
 				<div class="col-sm-10">
-					<c:set var="gender" value="${row.gender }" />
+					<c:set var="gender" value="${member.gender }" />
 					<input name="gender" type="radio" value="남"	<c:if test="${gender.equals('남')}"> <c:out value="checked" /> </c:if> >남 
 					<input name="gender" type="radio" value="여"	<c:if test="${gender.equals('여')}"> <c:out value="checked" /> </c:if> >여
 				</div>
@@ -73,7 +58,8 @@
 			<div class="form-group row">
 				<label class="col-sm-2">생일</label>
 				<div class="col-sm-4  ">
-					<input type="text" name="birthyy" maxlength="4" placeholder="년(4자)" 	size="6" value="${year}"> 
+					<input type="hidden" name="birth" id="birth">
+					<input type="text" name="birthyy" id="birthyy" maxlength="4" placeholder="년(4자)" 	size="6" value="${year}"> 
 						<select name="birthmm"	id="birthmm">
 						<option value="">월</option>
 						<option value="01">1</option>
@@ -88,13 +74,14 @@
 						<option value="10">10</option>
 						<option value="11">11</option>
 						<option value="12">12</option>
-					</select> <input type="text" name="birthdd" maxlength="2" placeholder="일" size="4" value="${day}">
+					</select> <input type="text" name="birthdd" id="birthdd" maxlength="2" placeholder="일" size="4" value="${day}">
 				</div>
 			</div>
 			<div class="form-group  row ">
 				<label class="col-sm-2">이메일</label>
 				<div class="col-sm-10">
-					<input type="text" name="mail1" maxlength="50" value="${mail1}">@
+					<input type="hidden" name="mail" id="mail">
+					<input type="text" name="mail1" id="mail1" maxlength="50" value="${mail1}">@
 					<select name="mail2" id="mail2">
 						<option>naver.com</option>
 						<option>daum.net</option>
@@ -106,31 +93,35 @@
 			<div class="form-group  row">
 				<label class="col-sm-2">전화번호</label>
 				<div class="col-sm-3">
-					<input name="phone" type="text" class="form-control" placeholder="phone" value="<c:out value='${row.phone}'/>">
+					<input name="phone" type="text" class="form-control" placeholder="phone" value="<c:out value='${member.phone}'/>">
 				</div>
 			</div>
 
 			<div class="form-group  row">
 				<label class="col-sm-2 ">주소</label>
 				<div class="col-sm-5">
-					<input name="address" type="text" class="form-control" placeholder="address" value="<c:out value='${row.address}'/>">
+					<input name="address" type="text" class="form-control" placeholder="address" value="<c:out value='${member.address}'/>">
 				</div>
 			</div>
 			<div class="form-group  row">
 				<div class="col-sm-offset-2 col-sm-10 ">
 					<input type="submit" class="btn btn-primary" value="회원수정 "> 
-					<a href="deleteMember.jsp" class="btn btn-primary">회원탈퇴</a>
+					<a href="/member/deleteMember.do" class="btn btn-primary">회원탈퇴</a>
 				</div>
 			</div>
 		</form>	
 	</div>
-	</c:forEach>
 </body>
 </html>
 <script type="text/javascript">
 	function init() {
-		setComboMailValue("${mail2}");
-		setComboBirthValue("${month}");
+		var birth = "${member.birth}";
+		var mail = "${member.mail}";
+		$("#birthyy").val(birth.substring(0,4));
+		$("#birthmm").val(birth.substring(4,6));
+		$("#birthdd").val(birth.substring(6,8));
+		$("#mail1").val(mail.split('@')[0]);
+		$("#mail2").val(mail.split('@')[1]);
 	}
 
 	function setComboMailValue(val) {
@@ -164,5 +155,8 @@
 			alert("비밀번호를 동일하게 입력하세요.");
 			return false;
 		}
+		document.newMember.birth.value = document.newMember.birthyy.value + document.newMember.birthmm.value + document.newMember.birthdd.value;
+        document.newMember.mail.value = document.newMember.mail1.value + "@" + document.newMember.mail2.value;
+        
 	}
 </script>

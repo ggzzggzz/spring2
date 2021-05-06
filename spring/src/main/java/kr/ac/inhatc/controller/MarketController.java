@@ -38,11 +38,21 @@ public class MarketController {
 		dto = marketService.processLoginMember(dto);
 		System.out.println(dto);
 		HttpSession session = request.getSession();
-		session.setAttribute("sessionId", dto.getName());
+		if(dto!=null) {
+			session.setAttribute("sessionId", dto.getName());
+			session.setAttribute("userId", dto.getId());
+		}
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("sessionId", session.getAttribute("sessionId"));
 		mv.setViewName("welcome");
 		return mv;
+	}
+	
+	@RequestMapping("/member/logoutMember.do")
+	public ModelAndView logoutMember(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.invalidate();
+		return loginMember();
 	}
 	
 	@RequestMapping("/member/addMember.do")
@@ -57,5 +67,35 @@ public class MarketController {
 		System.out.println(dto);
 		marketService.processAddMember(dto);
 		return loginMember();
+	}
+	
+	@RequestMapping("/member/updateMember.do")
+	public ModelAndView updateMember(HttpServletRequest request) throws Exception{
+		MemberDto member = new MemberDto();
+		HttpSession session = request.getSession();
+		member.setId(session.getAttribute("userId").toString());
+		System.out.println(member);
+		member = marketService.processInfoMember(member);
+		System.out.println(member);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("member", member);
+		mv.setViewName("member/updateMember");
+		return mv;
+	}
+	///member/processUpdateMember.do
+	@RequestMapping("/member/processUpdateMember.do")
+	public ModelAndView processUpdateMember(HttpServletRequest request, MemberDto dto) throws Exception{
+		System.out.println(dto);
+		marketService.processUpdateMember(dto);
+		System.out.println(dto);
+		return updateMember(request);
+	}
+	
+	@RequestMapping("/member/deleteMember.do")
+	public ModelAndView deleteMember(HttpServletRequest request, MemberDto dto) throws Exception{
+		HttpSession session = request.getSession();
+		dto.setId(session.getAttribute("userId").toString());
+		marketService.deleteMember(dto);
+		return logoutMember(request);
 	}
 }
