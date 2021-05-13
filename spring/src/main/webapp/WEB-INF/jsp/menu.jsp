@@ -19,12 +19,9 @@
 						<li class="nav-item"><a class="nav-link" href="<c:url value="/member/updateMember.do"/>">회원 수정</a></li>
 					</c:otherwise>
 				</c:choose>
-				<!-- 
 				<li class="nav-item"><a class="nav-link" href="<c:url value="/products.do"/>">상품 목록</a></li>
-				<li class="nav-item"><a class="nav-link" href="<c:url value="/addProduct.do"/>">상품 등록</a></li>
-				<li class="nav-item"><a class="nav-link" href="<c:url value="/editProduct.do?edit=update"/>">상품 수정</a></li>
-				<li class="nav-item"><a class="nav-link" href="<c:url value="/editProduct.do?edit=delete"/>">상품 삭제</a></li>
-				 -->
+                <li class="nav-item"><a class="nav-link" href="<c:url value="/addProduct.do"/>">상품 등록</a></li>
+                <li class="nav-item"><a class="nav-link" href="<c:url value="/editProduct.do?edit=update"/>">상품 편집</a></li>
 			</ul>
 		</div>
 	</div>

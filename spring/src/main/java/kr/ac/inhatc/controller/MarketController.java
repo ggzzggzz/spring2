@@ -1,14 +1,20 @@
 package kr.ac.inhatc.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.ac.inhatc.dto.MemberDto;
+import kr.ac.inhatc.dto.ProductDto;
 import kr.ac.inhatc.service.MarketService;
 
 @Controller
@@ -16,6 +22,8 @@ public class MarketController {
 	@Autowired
 	MarketService marketService;
 	
+	private static final Logger log = LoggerFactory.getLogger(MarketController.class);
+
 	@RequestMapping("/welcome.do")
 	public ModelAndView welcome(HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
@@ -33,14 +41,14 @@ public class MarketController {
 	}
 	
 	@RequestMapping("/member/processLoginMember.do")
-	public ModelAndView processLoginMember(HttpServletRequest request,MemberDto dto) throws Exception{
-		System.out.println(dto);
-		dto = marketService.processLoginMember(dto);
-		System.out.println(dto);
+	public ModelAndView processLoginMember(HttpServletRequest request,MemberDto member) throws Exception{
+		System.out.println(member);
+		member = marketService.processLoginMember(member);
+		System.out.println(member);
 		HttpSession session = request.getSession();
-		if(dto!=null) {
-			session.setAttribute("sessionId", dto.getName());
-			session.setAttribute("userId", dto.getId());
+		if(member!=null) {
+			session.setAttribute("sessionId", member.getName());
+			session.setAttribute("userId", member.getId());
 		}
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("sessionId", session.getAttribute("sessionId"));
@@ -63,9 +71,9 @@ public class MarketController {
 	}
 	// /member/processAddMember.do
 	@RequestMapping("/member/processAddMember.do")
-	public ModelAndView processAddMember(MemberDto dto) throws Exception{
-		System.out.println(dto);
-		marketService.processAddMember(dto);
+	public ModelAndView processAddMember(MemberDto member) throws Exception{
+		System.out.println(member);
+		marketService.processAddMember(member);
 		return loginMember();
 	}
 	
@@ -84,18 +92,44 @@ public class MarketController {
 	}
 	///member/processUpdateMember.do
 	@RequestMapping("/member/processUpdateMember.do")
-	public ModelAndView processUpdateMember(HttpServletRequest request, MemberDto dto) throws Exception{
-		System.out.println(dto);
-		marketService.processUpdateMember(dto);
-		System.out.println(dto);
+	public ModelAndView processUpdateMember(HttpServletRequest request, MemberDto member) throws Exception{
+		System.out.println(member);
+		marketService.processUpdateMember(member);
+		System.out.println(member);
 		return updateMember(request);
 	}
 	
 	@RequestMapping("/member/deleteMember.do")
-	public ModelAndView deleteMember(HttpServletRequest request, MemberDto dto) throws Exception{
+	public ModelAndView deleteMember(HttpServletRequest request, MemberDto member) throws Exception{
+		marketService.deleteMember(member);
 		HttpSession session = request.getSession();
-		dto.setId(session.getAttribute("userId").toString());
-		marketService.deleteMember(dto);
-		return logoutMember(request);
+        session.invalidate();
+		return welcome(request);
+	}
+	//debug -> info -> warn ->error
+	@RequestMapping("/products.do")
+	public ModelAndView products(HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView();
+        mv.setViewName("products");
+        List<ProductDto> list = marketService.listProducts();
+        mv.addObject("list", list);
+        log.info(list.toString());
+        return mv;
+	}
+	@RequestMapping("/addProduct.do")
+	public ModelAndView addProduct(HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		HttpSession session = request.getSession();
+		mv.addObject("sessionId", session.getAttribute("sessionId"));
+		mv.setViewName("addProduct");
+		return mv;
+	}
+	@RequestMapping("/product/processAddProduct.do")
+	public ModelAndView processAddProduct(ProductDto dto, 
+			MultipartFile productImage,
+			HttpServletRequest request) throws Exception{
+		marketService.saveImage(dto, productImage);
+		marketService.processAddProduct(dto);
+		return products(request);
 	}
 }

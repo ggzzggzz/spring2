@@ -106,7 +106,7 @@
 			<div class="form-group  row">
 				<div class="col-sm-offset-2 col-sm-10 ">
 					<input type="submit" class="btn btn-primary" value="회원수정 "> 
-					<a href="/member/deleteMember.do" class="btn btn-primary">회원탈퇴</a>
+					<a href="/member/deleteMember.do?id=${member.id }" class="btn btn-primary">회원탈퇴</a>
 				</div>
 			</div>
 		</form>	

@@ -33,4 +33,17 @@
     	DELETE FROM SHOP_MEMBER
     	WHERE id = #{id}
     </delete>
+    <insert id="processAddProduct" parameterType="kr.ac.inhatc.dto.ProductDto">
+    	INSERT INTO SHOP_PRODUCT
+    	VALUES
+    	(#{productId}, #{pname}, #{unitPrice}, #{description}, #{manufacturer},
+    	#{category}, #{unitsInStock}, #{condition}, #{fileName}, #{quantity}, now())
+    </insert>
+    <select id="listProducts" resultType="map">
+        SELECT  
+            PRODUCT_ID productId, PNAME pname, UNIT_PRICE unitPrice, DESCRIPTION description,
+            MANUFACTURER manufacturer, CATEGORY category, UNITS_IN_STOCK unitsInStock,
+            `CONDITION` `condition`, FILE_NAME fileName, QUANTITY quantity, REG_DT regDt
+        FROM SHOP_PRODUCT
+    </select>
 </mapper>
