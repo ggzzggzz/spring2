@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="/resource/res/css/bootstrap.min.css" />
 <script type="text/javascript">
 	function init(){
-		document.newProduct.condition.value = "";
+		document.newProduct.condition.value = "${dto.condition}";
 	}	
 </script>
 <title>상품 수정</title>
@@ -19,50 +19,50 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-5">
-				<img src="${product.filename}" alt="image" style="width: 100%" />
+				<img src="${dto.fileName}" alt="image" style="width: 100%" />
 			</div>
 			<div class="col-md-7">
 				<form name="newProduct" action="/processUpdateProduct.do" class="form-horizontal" method="post" enctype="multipart/form-data">
 					<div class="form-group row">
 						<label class="col-sm-2">상품 코드</label>
 						<div class="col-sm-3">
-							<input type="text" id="productId" name="productId" class="form-control" value=''>
+							<input type="text" id="productId" name="productId" class="form-control" value='${dto.productId}'>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-2">상품명</label>
 						<div class="col-sm-3">
-							<input type="text" id="pname" name="pname" class="form-control" value="">
+							<input type="text" id="pname" name="pname" class="form-control" value="${dto.pname}">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-2">가격</label>
 						<div class="col-sm-3">
-							<input type="text" id="unitPrice" name="unitPrice" class="form-control" value="">
+							<input type="text" id="unitPrice" name="unitPrice" class="form-control" value="${dto.unitPrice}">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-2">상세 설명</label>
 						<div class="col-sm-5">
-							<textarea name="description" cols="50" rows="2" class="form-control"></textarea>
+							<textarea name="description" cols="50" rows="2" class="form-control">${dto.description}</textarea>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-2">제조사</label>
 						<div class="col-sm-3">
-							<input type="text" name="manufacturer" class="form-control" value="">
+							<input type="text" name="manufacturer" class="form-control" value="${dto.manufacturer}">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-2">분류</label>
 						<div class="col-sm-3">
-							<input type="text" name="category" class="form-control" value="">
+							<input type="text" name="category" class="form-control" value="${dto.category}">
 						</div>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-2">제고 수</label>
 						<div class="col-sm-3">
-							<input type="text" id="unitsInStock" name="unitsInStock" class="form-control" value="">
+							<input type="text" id="unitsInStock" name="unitsInStock" class="form-control" value="${dto.unitsInStock}">
 						</div>
 					</div>
 					<div class="form-group row">

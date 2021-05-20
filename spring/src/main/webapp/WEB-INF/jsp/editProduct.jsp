@@ -27,13 +27,13 @@
 	<div class="container">
 		<div class="row" align="center">
 			<div class="col-md-4">
-				<c:forEach var="result" items="" varStatus="status">
-					<img src="" style="width: 100%">
-				<h3></h3>
-				<p>
-				<p>$원
-				<p><a href="./updateProduct.do?productId=" class="btn btn-success" role="button"> 수정 &raquo;></a>
-				<a href="#" onclick="deleteConfirm('')" class="btn btn-danger" role="button">삭제 &raquo;></a>
+				<c:forEach var="result" items="${list}" varStatus="status">
+					<img src="${result.fileName}" style="width: 100%">
+				<h3>${result.pname}</h3>
+                <p>${result.description}
+                <p>${result.unitPrice}원
+				<p><a href="./updateProduct.do?productId=${result.productId}" class="btn btn-success" role="button"> 수정 &raquo;></a>
+				<a href="#" onclick="deleteConfirm('${result.productId}')" class="btn btn-danger" role="button">삭제 &raquo;></a>
 				</c:forEach>	
 			</div>
 				

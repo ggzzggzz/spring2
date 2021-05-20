@@ -132,4 +132,51 @@ public class MarketController {
 		marketService.processAddProduct(dto);
 		return products(request);
 	}
+	// /editProduct.do
+	@RequestMapping("/editProduct.do")
+	public ModelAndView editProduct(HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView();
+        mv.setViewName("editProduct");
+        List<ProductDto> list = marketService.listProducts();
+        mv.addObject("list", list);
+        log.info(list.toString());
+        return mv;
+	}
+	// /updateProduct.do
+	@RequestMapping("/updateProduct.do")
+	public ModelAndView updateProduct(HttpServletRequest request, ProductDto dto) throws Exception {
+		ModelAndView mv = new ModelAndView();
+        mv.setViewName("updateProduct");
+        dto = marketService.getProduct(dto);
+        mv.addObject("dto", dto);
+        log.info(dto.toString());
+        return mv;
+	}
+	// /processUpdateProduct.do
+	@RequestMapping("/processUpdateProduct.do")
+	public ModelAndView processUpdateProduct(ProductDto dto, 
+			MultipartFile productImage,
+			HttpServletRequest request) throws Exception{
+		marketService.saveImage(dto, productImage);
+		marketService.processUpdateProduct(dto);
+		return products(request);
+	}
+	// /deleteProduct.do
+	@RequestMapping("/deleteProduct.do")
+	public ModelAndView deleteProduct(ProductDto dto, 
+			MultipartFile productImage,
+			HttpServletRequest request) throws Exception{
+		marketService.deleteProduct(dto);
+		return editProduct(request);
+	}
+	// /product.do
+	@RequestMapping("/product.do")
+	public ModelAndView product(HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView();
+        mv.setViewName("product");
+        List<ProductDto> list = marketService.listProducts();
+        mv.addObject("list", list);
+        log.info(list.toString());
+        return mv;
+	}
 }

@@ -41,11 +41,25 @@ public class MarketService {
 		return mapper.processAddProduct(dto);
 	}
 	public void saveImage(ProductDto dto, MultipartFile productImage) throws IllegalStateException, IOException {
-		File file = new File(rootPath+"/"+productImage.getOriginalFilename());
-		productImage.transferTo(file);
-		dto.setFileName(urlPath+file.getName());
+		try {
+			File file = new File(rootPath+"/"+productImage.getOriginalFilename());
+			productImage.transferTo(file);
+			dto.setFileName(urlPath+file.getName());
+		} catch (Exception e) {
+			//TODO handle exception
+		}
 	}
 	public List<ProductDto> listProducts() throws Exception{
 		return mapper.listProducts();
+	}
+	public ProductDto getProduct(ProductDto dto) throws Exception{
+		return mapper.getProduct(dto);
+	}
+	public int processUpdateProduct(ProductDto dto) throws Exception{
+		return mapper.processUpdateProduct(dto);
+	}
+	// deleteProduct
+	public int deleteProduct(ProductDto dto) throws Exception{
+		return mapper.deleteProduct(dto);
 	}
 }

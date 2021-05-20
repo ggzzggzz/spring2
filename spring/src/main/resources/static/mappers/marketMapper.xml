@@ -46,4 +46,35 @@
             `CONDITION` `condition`, FILE_NAME fileName, QUANTITY quantity, REG_DT regDt
         FROM SHOP_PRODUCT
     </select>
+    <select id="getProduct" parameterType="kr.ac.inhatc.dto.ProductDto" resultType="kr.ac.inhatc.dto.ProductDto">
+    	SELECT  
+            PRODUCT_ID productId, PNAME pname, UNIT_PRICE unitPrice, DESCRIPTION description,
+            MANUFACTURER manufacturer, CATEGORY category, UNITS_IN_STOCK unitsInStock,
+            `CONDITION` `condition`, FILE_NAME fileName, QUANTITY quantity, REG_DT regD
+        FROM SHOP_PRODUCT
+        WHERE 
+        	PRODUCT_ID = #{productId}
+    </select>
+    <update id="processUpdateProduct" parameterType="kr.ac.inhatc.dto.ProductDto">
+    	UPDATE SHOP_PRODUCT
+    		SET
+    		PNAME = #{pname},
+    		UNIT_PRICE =  #{unitPrice},
+    		DESCRIPTION = #{description},
+    		MANUFACTURER = #{manufacturer},
+    		CATEGORY = #{category},
+    		UNITS_IN_STOCK = #{unitsInStock},
+    		`CONDITION` = #{condition},
+    		<if test="fileName != null and fileName != ''">
+    		FILE_NAME = #{fileName},
+    		</if>
+    		QUANTITY = #{quantity},
+    		REG_DT = NOW()
+    	WHERE
+    		PRODUCT_ID = #{productId}
+    </update>
+    <delete id="deleteProduct" parameterType="kr.ac.inhatc.dto.ProductDto">
+    	DELETE FROM SHOP_PRODUCT
+    	WHERE PRODUCT_ID = #{productId}
+    </delete>
 </mapper>
